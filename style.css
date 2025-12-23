@@ -7,31 +7,32 @@
     /* Colors */
     --bg-dark: #09090b;
     --bg-darker: #050507;
-    
-    --primary-gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%); /* Blue to Purple */
+
+    --primary-gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    /* Blue to Purple */
     --accent-color: #8b5cf6;
     --accent-glow: rgba(139, 92, 246, 0.5);
-    
+
     --glass-bg: rgba(20, 20, 25, 0.6);
     --glass-border: rgba(255, 255, 255, 0.08);
     --glass-highlight: rgba(255, 255, 255, 0.03);
-    
+
     --text-primary: #ffffff;
     --text-secondary: #a1a1aa;
     --text-tertiary: #71717a;
-    
+
     --input-bg: rgba(0, 0, 0, 0.3);
-    
+
     /* Spacing & Radius */
     --radius-lg: 24px;
     --radius-md: 16px;
     --radius-sm: 12px;
-    
+
     --spacing-xs: 4px;
     --spacing-sm: 8px;
     --spacing-md: 16px;
     --spacing-lg: 24px;
-    
+
     /* Transitions */
     --transition-fast: 0.2s ease;
     --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -103,8 +104,13 @@ body {
 }
 
 @keyframes float {
-    0% { transform: translate(0, 0); }
-    100% { transform: translate(30px, 30px); }
+    0% {
+        transform: translate(0, 0);
+    }
+
+    100% {
+        transform: translate(30px, 30px);
+    }
 }
 
 /* Layout */
@@ -114,7 +120,7 @@ body {
     max-width: 1600px;
     display: flex;
     position: relative;
-    background: rgba(0,0,0,0.2);
+    background: rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(20px);
 }
 
@@ -196,7 +202,7 @@ body {
 }
 
 .btn-secondary:hover {
-    background: rgba(255,255,255,0.08);
+    background: rgba(255, 255, 255, 0.08);
     transform: translateY(-1px);
 }
 
@@ -236,7 +242,8 @@ body {
     font-size: 14px;
 }
 
-.history-item:hover, .history-item.active {
+.history-item:hover,
+.history-item.active {
     background: var(--glass-highlight);
     color: var(--text-primary);
 }
@@ -286,7 +293,8 @@ body {
 
 .user-info .status {
     font-size: 11px;
-    color: #4ade80; /* Green */
+    color: #4ade80;
+    /* Green */
 }
 
 /* Chat Area */
@@ -295,7 +303,7 @@ body {
     display: flex;
     flex-direction: column;
     position: relative;
-    background: rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.1);
 }
 
 .chat-header {
@@ -347,7 +355,8 @@ body {
 /* Messages */
 .messages-container {
     flex: 1;
-    padding: 20px 15% 120px 15%; /* Bottom padding for input area space */
+    padding: 20px 15% 120px 15%;
+    /* Bottom padding for input area space */
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -360,12 +369,14 @@ body {
     .messages-container {
         padding: 20px 5% 120px 5%;
     }
+
     .sidebar {
         position: absolute;
         left: -100%;
         height: 100%;
         background: var(--bg-dark);
     }
+
     .sidebar.open {
         left: 0;
     }
@@ -376,7 +387,8 @@ body {
     gap: 16px;
     max-width: 800px;
     width: 100%;
-    align-self: center; /* Center rendering column */
+    align-self: center;
+    /* Center rendering column */
     animation: fadeIn 0.3s ease-up;
 }
 
@@ -415,7 +427,7 @@ body {
 
 /* Markdown Styles inside messages */
 .message-content code {
-    background: rgba(0,0,0,0.3);
+    background: rgba(0, 0, 0, 0.3);
     padding: 2px 5px;
     border-radius: 4px;
     font-family: 'Consolas', monospace;
@@ -423,7 +435,7 @@ body {
 }
 
 .message-content pre {
-    background: rgba(0,0,0,0.4);
+    background: rgba(0, 0, 0, 0.4);
     padding: 12px;
     border-radius: 8px;
     overflow-x: auto;
@@ -436,7 +448,8 @@ body {
     color: #e2e8f0;
 }
 
-.message-content ul, .message-content ol {
+.message-content ul,
+.message-content ol {
     margin-left: 20px;
     margin-bottom: 8px;
 }
@@ -444,6 +457,7 @@ body {
 .message-content p {
     margin-bottom: 8px;
 }
+
 .message-content p:last-child {
     margin-bottom: 0;
 }
@@ -468,10 +482,11 @@ body {
     border: 1px solid var(--glass-border);
     border-radius: 28px;
     display: flex;
-    align-items: flex-end; /* Align bottom for textarea growth */
+    align-items: flex-end;
+    /* Align bottom for textarea growth */
     padding: 8px 8px 8px 20px;
     transition: all 0.2s ease;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .input-wrapper:focus-within {
@@ -527,21 +542,31 @@ body {
 .custom-scrollbar::-webkit-scrollbar {
     width: 6px;
 }
+
 .custom-scrollbar::-webkit-scrollbar-track {
     background: transparent;
 }
+
 .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
 }
+
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: rgba(255,255,255,0.2);
+    background: rgba(255, 255, 255, 0.2);
 }
 
 /* Animations */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Modal */
@@ -551,7 +576,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.8);
+    background: rgba(0, 0, 0, 0.8);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -574,7 +599,7 @@ body {
     border-radius: var(--radius-lg);
     background: #13131a;
     border: 1px solid var(--glass-border);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
     display: flex;
     flex-direction: column;
     gap: 24px;
@@ -594,7 +619,7 @@ body {
 }
 
 .input-group {
-    background: rgba(255,255,255,0.05);
+    background: rgba(255, 255, 255, 0.05);
     border: 1px solid var(--glass-border);
     border-radius: 12px;
     display: flex;
@@ -605,7 +630,7 @@ body {
 
 .input-group:focus-within {
     border-color: var(--accent-color);
-    background: rgba(255,255,255,0.08);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .input-group input {
@@ -652,7 +677,7 @@ body {
     display: inline-flex;
     gap: 4px;
     padding: 4px 8px;
-    background: rgba(255,255,255,0.05);
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 12px;
     align-items: center;
 }
@@ -665,10 +690,24 @@ body {
     animation: pulse 1.4s infinite;
 }
 
-.dot-pulse:nth-child(2) { animation-delay: 0.2s; }
-.dot-pulse:nth-child(3) { animation-delay: 0.4s; }
+.dot-pulse:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.dot-pulse:nth-child(3) {
+    animation-delay: 0.4s;
+}
 
 @keyframes pulse {
-    0%, 100% { opacity: 0.4; transform: scale(0.8); }
-    50% { opacity: 1; transform: scale(1.1); }
+
+    0%,
+    100% {
+        opacity: 0.4;
+        transform: scale(0.8);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
 }
