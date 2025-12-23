@@ -13,22 +13,75 @@ const elements = {
     messagesContainer: document.getElementById('messages-container'),
     userInput: document.getElementById('user-input'),
     sendBtn: document.getElementById('send-btn'),
+
+    // Auth Elements
+    authModal: document.getElementById('auth-modal'),
+    authForm: document.getElementById('auth-form'),
+    authEmail: document.getElementById('auth-email'),
+    authPassword: document.getElementById('auth-password'),
+    authSubmitText: document.getElementById('auth-submit-text'),
+    toggleAuthModeBtn: document.getElementById('toggle-auth-mode'),
+    authSubtitle: document.getElementById('auth-subtitle'),
+    userDisplayName: document.getElementById('user-display-name'),
+    logoutBtn: document.getElementById('logout-btn'),
 };
 
 // State
 let state = {
     apiKey: localStorage.getItem('gemini_api_key') || '',
-    history: [], // For future implementation of chat sessions
+    history: [],
     currentChat: [],
     isTyping: false,
-    staticPrompts: ''
+    staticPrompts: '',
+    user: null, // Firebase User
+    isSignupMode: false
 };
+
+// RELEASE_NOTE: REPLACE THIS WITH YOUR FIREBASE CONFIG FROM CONSOLE
+const firebaseConfig = {
+    apiKey: "AIzaSyDI-bwjmf7KFPzYWOiIeh76KA79DLpQISM",
+    authDomain: "healio-2e391.firebaseapp.com",
+    projectId: "healio-2e391",
+    storageBucket: "healio-2e391.firebasestorage.app",
+    messagingSenderId: "891730049218",
+    appId: "1:891730049218:web:9e3cfd490f00a59ab5635b",
+    measurementId: "G-3XP0YJWTKT"
+};
+
+// Initialize Firebase
+try {
+    firebase.initializeApp(firebaseConfig);
+    console.log("Firebase Initialized");
+} catch (e) {
+    console.error("Firebase Init Error (Did you add your config?):", e);
+}
+const auth = firebase.auth();
+const db = firebase.firestore();
 
 // Initialize
 function init() {
-    checkApiKey();
+    setupAuthListener();
     setupEventListeners();
     loadStaticPrompts();
+}
+
+function setupAuthListener() {
+    auth.onAuthStateChanged((user) => {
+        if (user) {
+            // User is signed in.
+            state.user = user;
+            elements.userDisplayName.textContent = user.email.split('@')[0]; // Simple display name
+            elements.authModal.classList.remove('active');
+            checkApiKey(); // Process to API key check after auth
+        } else {
+            // No user is signed in.
+            state.user = null;
+            elements.userDisplayName.textContent = "Guest";
+            elements.authModal.classList.add('active');
+            // Ensure API Key modal is hidden if we are back at auth
+            elements.apiKeyModal.classList.remove('active');
+        }
+    });
 }
 
 async function loadStaticPrompts() {
@@ -46,6 +99,7 @@ async function loadStaticPrompts() {
 }
 
 function checkApiKey() {
+    if (!state.user) return; // Don't check API key if not logged in
     if (!state.apiKey) {
         elements.apiKeyModal.classList.add('active');
     } else {
@@ -79,6 +133,49 @@ function setupEventListeners() {
     // Chat Management
     elements.newChatBtn.addEventListener('click', resetChat);
     elements.clearChatBtn.addEventListener('click', clearMessages);
+
+    // Auth Events
+    elements.authForm.addEventListener('submit', handleAuthSubmit);
+    elements.toggleAuthModeBtn.addEventListener('click', toggleAuthMode);
+    elements.logoutBtn.addEventListener('click', handleLogout);
+}
+
+// Auth Functions
+async function handleAuthSubmit(e) {
+    e.preventDefault();
+    const email = elements.authEmail.value;
+    const password = elements.authPassword.value;
+
+    try {
+        if (state.isSignupMode) {
+            await auth.createUserWithEmailAndPassword(email, password);
+        } else {
+            await auth.signInWithEmailAndPassword(email, password);
+        }
+        // Listener handles UI updates
+    } catch (error) {
+        alert(error.message);
+    }
+}
+
+function toggleAuthMode(e) {
+    e.preventDefault();
+    state.isSignupMode = !state.isSignupMode;
+
+    if (state.isSignupMode) {
+        elements.authSubmitText.textContent = "Sign Up";
+        elements.authSubtitle.textContent = "Create an account to get started";
+        elements.toggleAuthModeBtn.textContent = "Sign In";
+    } else {
+        elements.authSubmitText.textContent = "Sign In";
+        elements.authSubtitle.textContent = "Sign in to continue your health journey";
+        elements.toggleAuthModeBtn.textContent = "Sign Up";
+    }
+}
+
+function handleLogout(e) {
+    e.preventDefault();
+    auth.signOut();
 }
 
 // Actions

@@ -78,8 +78,9 @@
                 <div class="user-profile">
                     <div class="avatar">U</div>
                     <div class="user-info">
-                        <span class="name">User</span>
-                        <span class="status">Online</span>
+                        <span class="name" id="user-display-name">Guest</span>
+                        <a href="#" id="logout-btn" class="status"
+                            style="cursor: pointer; text-decoration: none;">Logout</a>
                     </div>
                 </div>
             </div>
@@ -122,6 +123,40 @@
             </div>
         </main>
     </div>
+
+    <div id="auth-modal" class="modal">
+        <div class="modal-content glass-panel">
+            <div class="modal-header">
+                <h2><span class="gradient-text">Welcome Back</span></h2>
+                <p id="auth-subtitle">Sign in to continue your health journey</p>
+            </div>
+
+            <form id="auth-form">
+                <div class="input-group" style="margin-bottom: 12px;">
+                    <span class="material-symbols-rounded icon">mail</span>
+                    <input type="email" id="auth-email" placeholder="Email Address" required>
+                </div>
+                <div class="input-group" style="margin-bottom: 24px;">
+                    <span class="material-symbols-rounded icon">lock</span>
+                    <input type="password" id="auth-password" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%;">
+                    <span id="auth-submit-text">Sign In</span>
+                    <span class="material-symbols-rounded">login</span>
+                </button>
+            </form>
+
+            <p class="helper-text" id="auth-toggle-text">
+                Don't have an account? <a href="#" id="toggle-auth-mode"
+                    style="color: var(--accent-color); text-decoration: none;">Sign Up</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> <!-- Markdown Parser -->
     <script src="script.js"></script>
