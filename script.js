@@ -20,13 +20,29 @@ let state = {
     apiKey: localStorage.getItem('gemini_api_key') || '',
     history: [], // For future implementation of chat sessions
     currentChat: [],
-    isTyping: false
+    isTyping: false,
+    staticPrompts: ''
 };
 
 // Initialize
 function init() {
     checkApiKey();
     setupEventListeners();
+    loadStaticPrompts();
+}
+
+async function loadStaticPrompts() {
+    try {
+        const response = await fetch('prompts.txt');
+        if (response.ok) {
+            state.staticPrompts = await response.text();
+            console.log('Static prompts loaded.');
+        } else {
+            console.warn('prompts.txt not found or could not be loaded.');
+        }
+    } catch (error) {
+        console.warn('Error loading prompts.txt:', error);
+    }
 }
 
 function checkApiKey() {
@@ -118,6 +134,10 @@ async function fetchGeminiResponse(prompt) {
         throw new Error("No API Key");
     }
 
+    const fullPrompt = state.staticPrompts
+        ? `${state.staticPrompts}\n\nUser: ${prompt}`
+        : prompt;
+
     const response = await fetch(`${API_URL}?key=${state.apiKey}`, {
         method: 'POST',
         headers: {
@@ -126,7 +146,7 @@ async function fetchGeminiResponse(prompt) {
         body: JSON.stringify({
             contents: [{
                 parts: [{
-                    text: prompt
+                    text: fullPrompt
                 }]
             }]
         })
